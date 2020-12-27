@@ -17,7 +17,7 @@ class donor(models.Model):
     PASSWORD=models.CharField(max_length=50)
     NOTIFICATION_EID=models.CharField(max_length=50)
     EMAIL=models.CharField(max_length=50)
-    WANT_TO_DONATE=models.DateField(auto_now=False, auto_now_add=False)    #wiling to donate blood
+    WANT_TO_DONATE=models.CharField(auto_now=False, auto_now_add=False,max_length=50)    #wiling to donate blood
 
     class Meta:
         db_table='donor'
