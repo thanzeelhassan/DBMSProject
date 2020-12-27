@@ -68,9 +68,7 @@ class staff(models.Model):
     class Meta:
         db_table='staff'
 
-
 ##########################################################
-
 
 class req_recived_blood(models.Model):
     REQUEST_ID=models.CharField(max_length=50,primary_key=True)
