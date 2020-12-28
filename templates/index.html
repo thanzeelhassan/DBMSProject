@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 
-  <link rel='stylesheet' type="text/css" href="{% static 'css/main.css' %}" >
+  <link rel='stylesheet' type="text/css" href="{% static 'css/style.css' %}" >
 
 </head>
 <body>
@@ -26,13 +26,14 @@
             <button>STAFF</button>
         </a>
         </p>
-        <p class="message">Not registered? <a href="donor_reg.php">Create an account</a></p>
+        <p class="message">Not registered? <a href="donor_reg.html">Create an account</a></p>
 
 
 
   </div>
   </div>
   <center><p style="color:#8a0303 ;"><b><q>BE THE ONE WHO SAVES A LIFE</q></b></p>
-  <img src="image.png" width="300" height="200"></center>
+  <img src="{% static 'img/image.png' %}" alt="My image"width="300" height="200"></center>
+
 </body>
 </html>

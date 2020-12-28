@@ -57,14 +57,27 @@ def donor_reg(request):
         return HttpResponse("Success")
 
 def admin_login(request):
-    html = render(request,'admin_login.html')
-    return html
+    if request.method=='GET':
+        return render(request, 'admin_login.html')
+
+    else:
+        post = request.POST
+
+        username = str(post['username'])
+        password = str(post['password'])
+        if admin_table.objects.filter(A_ID=username,PASSWORD=password).exists() :
+            return render(request, 'admin_home.html')
+            #return HttpResponse("Welcome Admin")
+        else:
+            return HttpResponse("Username and Password does not match")
 
 def login_page(request):
     html = render(request,'admin_login.html')
     return html
 
 def staff_page(request):
+    
+
     html = render(request,'staff_home.html')
     return html
 

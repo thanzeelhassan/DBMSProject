@@ -1,12 +1,12 @@
 from django.db import models
 
 class donor(models.Model):
-    D_ID=models.AutoField(primary_key=True)  ###################################email
+    D_ID=models.CharField(primary_key=True, max_length=50)  ###################################email
     FNAME=models.CharField(max_length=50)
     LNAME=models.CharField(max_length=50)
     AGE=models.IntegerField()
     GENDER=models.CharField(max_length=50)
-    PHONE=models.IntegerField()
+    PHONE=models.CharField(max_length=50)
     RHFACTOR=models.CharField(max_length=50)
     BLOODTYPE=models.CharField(max_length=50)
     HOUSENAME=models.CharField(max_length=50)
@@ -15,7 +15,6 @@ class donor(models.Model):
     AADHARNO=models.IntegerField()
     LDOFDON=models.DateField(auto_now=False, auto_now_add=False)  #last date of donation #################   NULL
     PASSWORD=models.CharField(max_length=50)
-    NOTIFICATION_EID=models.CharField(max_length=50)
     EMAIL=models.CharField(max_length=50)
     WANT_TO_DONATE=models.CharField(max_length=50)    #wiling to donate blood
 
@@ -26,7 +25,7 @@ class donor(models.Model):
 
 class blood(models.Model):
     B_ID=models.CharField(max_length=50,primary_key=True)
-    D_ID=models.IntegerField()
+    D_ID=models.CharField(max_length=50)
     EMP_ID=models.CharField(max_length=50)
     DATE=models.DateField(auto_now=False, auto_now_add=False)
 
@@ -39,7 +38,7 @@ class hospital(models.Model):
     H_ID=models.AutoField(primary_key=True)
     HNAME=models.CharField(max_length=50)  #Hospital name
     PASSWORD=models.CharField(max_length=50)
-    PHONENO=models.IntegerField()
+    PHONENO=models.CharField(max_length=50)
 
     class Meta:
         db_table='hospital'
@@ -60,7 +59,7 @@ class staff(models.Model):
     EMP_ID=models.AutoField(primary_key=True)
     FNAME=models.CharField(max_length=50)
     LNAME=models.CharField(max_length=50)
-    PHONENO=models.IntegerField()
+    PHONENO=models.CharField(max_length=50)
     HOUSENAME=models.CharField(max_length=50)
     STREETNAME=models.CharField(max_length=50)
     PIN=models.IntegerField()
@@ -87,7 +86,7 @@ class req_received_blood(models.Model):
 ###############################################################
 
 class health_cond(models.Model):
-    D_ID=models.IntegerField()
+    D_ID=models.CharField(max_length=50)
     CONDITION=models.CharField(max_length=50)
 
     class Meta:
@@ -99,7 +98,7 @@ class admin_table(models.Model):
     A_ID=models.CharField(max_length=50,primary_key=True)
     FNAME=models.CharField(max_length=50)
     LNAME=models.CharField(max_length=50)
-    PHONE=models.IntegerField()
+    PHONE=models.CharField(max_length=50)
     PASSWORD=models.CharField(max_length=50)
 
     class Meta:
