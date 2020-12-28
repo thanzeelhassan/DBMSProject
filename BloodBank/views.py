@@ -230,6 +230,7 @@ def donor_home(request):
 
         return redirect('/donor_home/')
 
+
 def staff_login(request):
     if request.method=='GET':
         logout(request)

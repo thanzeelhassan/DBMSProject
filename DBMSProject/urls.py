@@ -20,8 +20,8 @@ urlpatterns = [
     path('donor_login/', views.donor_login, name='donor_login'),
     path('donor_home/', views.donor_home, name='donor_home'),
 
-    path('staff_login/', views.staff_login, name='staff_home'),
     path('staff_home/', views.staff_home, name='staff_home'),
+    path('staff_login/', views.staff_login, name='staff_login'),
 
     path('hospital_login/', views.hospital_login, name='hospital_home'),
     path('hospital_home/', views.hospital_home, name='hospital_page'), 
