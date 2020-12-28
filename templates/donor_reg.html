@@ -1,20 +1,22 @@
+{% load static %}
 <html>
 <head>
-    <link rel="stylesheet" a href="style.css"/>
+    <link rel='stylesheet' type="text/css" href="{% static 'css/style.css' %}" >
 </head>
 <body>
     <h2>DONOR REGISTRATION</h2>
 <div class="login-page">
     <div class="form">
-    
-     
-      <form method="POST" action="">
+
+
+      <form method="POST" action="/donor_reg/">
+        {% csrf_token %}
         <input type="text" placeholder="FIRST NAME" name="fname">
         <input type="text" placeholder="LAST NAME" name="lname">
         <input type="text" placeholder="AGE" name="age">
         <input type="text" placeholder="EMAIL" name="email">
-       
-     
+
+
         <input type="password" placeholder="PASSWORD" name="password">
         <input type="password" placeholder="CONFIRM PASSWORD" name="c_password">
         <input type="text" placeholder="PHONE" name="phone">
@@ -27,7 +29,7 @@
         GENDER:<br>
         <label for="MALE">MR</label>
         <input type="radio" id="MALE" name="gender" value='male'>
-        
+
         <label for="FEMALE">MS</label>
         <input type="radio" id="FEMALE" name="gender" value='female'>
         <label for="OTHERS">MX</label>
@@ -35,10 +37,10 @@
         <label for="NILL">Not prefer to disclose</label>
         <input type="radio" id="NILL" name="gender" value='NILL'>
         <button name="submit">REGISTER</button>
-      
-        <p class="message">already registered? <a href="donor_login.html">Login</a></p>
+
+        <p class="message">already registered? <a href="/donor_login/">Login</a></p>
       </form>
-    
+
   </div>
   </div>
   </body>

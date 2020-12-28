@@ -1,21 +1,22 @@
+{% load static %}
 <html>
 <head>
-    <link rel="stylesheet" a href="style.css"/>
+    <link rel='stylesheet' type="text/css" href="{% static 'css/style.css' %}" >
 </head>
 <body>
     <h2>ADMIN LOGIN</h2>
 <div class="login-page">
     <div class="form">
-    
-     
+
+
       <form method="POST" action="">
         <input type="text" placeholder="ADMIN_ID" name="username">
         <input type="password" placeholder="password" name="password">
         <button name="submit">LOGIN</button>
-      
-        
+
+
       </form>
-    
+
   </div>
   </div>
   </body>

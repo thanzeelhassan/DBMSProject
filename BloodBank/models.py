@@ -1,7 +1,7 @@
 from django.db import models
 
 class donor(models.Model):
-    D_ID=models.AutoField(primary_key=True)
+    D_ID=models.AutoField(primary_key=True)  ###################################email
     FNAME=models.CharField(max_length=50)
     LNAME=models.CharField(max_length=50)
     AGE=models.IntegerField()
@@ -13,11 +13,11 @@ class donor(models.Model):
     STREETNAME=models.CharField(max_length=50)
     PIN=models.IntegerField()
     AADHARNO=models.IntegerField()
-    LDOFDON=models.DateField(auto_now=False, auto_now_add=False)  #last date of donation
+    LDOFDON=models.DateField(auto_now=False, auto_now_add=False)  #last date of donation #################   NULL
     PASSWORD=models.CharField(max_length=50)
     NOTIFICATION_EID=models.CharField(max_length=50)
     EMAIL=models.CharField(max_length=50)
-    WANT_TO_DONATE=models.CharField(auto_now=False, auto_now_add=False,max_length=50)    #wiling to donate blood
+    WANT_TO_DONATE=models.CharField(max_length=50)    #wiling to donate blood
 
     class Meta:
         db_table='donor'
@@ -68,15 +68,17 @@ class staff(models.Model):
     class Meta:
         db_table='staff'
 
+
 ##########################################################
 
-class req_recived_blood(models.Model):
+
+class req_received_blood(models.Model):
     REQUEST_ID=models.CharField(max_length=50,primary_key=True)
     H_ID=models.IntegerField()
     BLOOD_BAG_NO=models.CharField(max_length=50)
     BLOODTYPE=models.CharField(max_length=50)
     RHFACTOR=models.CharField(max_length=50)
-    RECIVED_AMOUNT=models.IntegerField()
+    RECEIVED_AMOUNT=models.IntegerField()
     REQUESTED_AMOUNT=models.IntegerField()
 
     class Meta:
@@ -93,7 +95,7 @@ class health_cond(models.Model):
 
 #####################################################################
 
-class admin(models.Model):
+class admin_table(models.Model):
     A_ID=models.CharField(max_length=50,primary_key=True)
     FNAME=models.CharField(max_length=50)
     LNAME=models.CharField(max_length=50)
@@ -101,4 +103,4 @@ class admin(models.Model):
     PASSWORD=models.CharField(max_length=50)
 
     class Meta:
-        db_table='admin'
+        db_table='admin_table'
