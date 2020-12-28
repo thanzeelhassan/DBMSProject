@@ -5,8 +5,8 @@ from BloodBank.models import donor,blood,hospital,storage,staff,req_received_blo
 #from . import forms
 from django.contrib.auth import logout
 
-def index(request):
-    return render(request, 'index.html')
+def home(request):
+    return render(request, 'home.html')
 
 def donor_login(request):
     if request.method=='GET':
@@ -28,7 +28,7 @@ def donor_login(request):
 
 def donor_home(request):
     if not request.session.get('email'):
-        return HttpResponse("Session Expired.")
+        return HttpResponse("Session Expired. Please Login Again.")
     if request.method=='GET':
         return render(request, 'donor_home.html')
     else:
@@ -82,6 +82,8 @@ def add_hospital(request):
         email = str(post['email'])
         password = str(post['password'])
         phone = str(post['phone'])
+        address=str(post['address'])
+        pin=str(post['pin'])
 
         _, created = hospital.objects.update_or_create(
                 H_ID=username,
@@ -89,6 +91,8 @@ def add_hospital(request):
                 PHONENO=phone,
                 EMAIL=email,
                 PASSWORD=password,
+                ADDRESS=address,
+                PIN=pin
         )
 
         return HttpResponse("Success")
@@ -123,12 +127,14 @@ def add_staff(request):
         return HttpResponse("Success")
 
 def blood_storage(request):
-    html = render(request,'admin_login.html')
-    return html
+    var1=storage.objects.values().order_by('BLOODTYPE')
+    list_result = [entry for entry in var1]
+    return render(request,'blood_storage.html',{'abcd2':list_result})
 
 def approve_req(request):
-    html = render(request,'admin_login.html')
-    return html
+    var1=req_received_blood.objects.values()
+    list_result = [entry for entry in var1]
+    return render(request,'approve_req.html',{'abcd2':list_result})
 
 def donor_reg(request):
     if request.method=='GET':
@@ -230,26 +236,99 @@ def staff_login(request):
         return render(request, 'staff_login.html')
 
     else:
-        email = request.POST['email']
+        username = request.POST['username']
         password = request.POST['password']
-        obj=donor.objects.filter(D_ID=email)
+        obj=staff.objects.filter(EMP_ID=username)
         if not len(obj):
             return HttpResponse("User not found")
         obj = obj[0]
         if obj.PASSWORD != password:
             return HttpResponse('Password wrong')
-        request.session['email'] = email
+        request.session['username'] = username
         request.session.set_expiry(14400)
-        return redirect('/donor_home/')
+        return redirect('/staff_home/')
 
 def staff_home(request):
-    html = render(request,'donor_home.html')
-    return html
+    if not request.session.get('username'):
+        return HttpResponse("Session Expired.")
+    if request.method=='GET':
+        return render(request, 'staff_home.html')
+    else:
+        username = request.session['username']
+        b_id = request.POST['b_id']
+        d_id = request.POST['d_id']
+        blood_type = request.POST['blood_type']
+        rh_factor = request.POST['rh_factor']
+        blood_amount = request.POST['blood_amount']
+        date = request.POST['DATE']
+        donor_obj = donor.objects.filter(D_ID=d_id)
+        donor_obj = donor_obj[0]
+        _, created = blood.objects.update_or_create(
+                B_ID=b_id,
+                D_ID=d_id,
+                BLOODTYPE=blood_type,
+                RHFACTOR=rh_factor,
+                BLOODAMOUNT=blood_amount,
+                EMP_ID=username,
+                DATE=date,
+        )
+        if str(date) > str(donor_obj.LDOFDON):
+            donor_obj.LDOFDON = date
+            donor_obj.save()
+
+        storage_obj = storage.objects.filter(BLOODTYPE=blood_type,RHFACTOR=rh_factor)
+        if not len(storage_obj):
+            _, created = storage.objects.update_or_create(
+                BLOODTYPE=blood_type,
+                RHFACTOR=rh_factor,
+                BLOODAMOUNT=blood_amount,
+            )
+        else:
+            storage_obj = storage_obj[0]
+            storage_obj.BLOODAMOUNT = str( int(storage_obj.BLOODAMOUNT) + int(blood_amount) )
+            storage_obj.save()
+
+        return redirect('/staff_home/')
 
 def hospital_login(request):
-    html = render(request,'donor_home.html')
-    return html
+    if request.method=='GET':
+        logout(request)
+        return render(request, 'hospital_login.html')
+
+    else:
+        username = request.POST['username']
+        password = request.POST['password']
+        obj=hospital.objects.filter(H_ID=username)
+        if not len(obj):
+            return HttpResponse("Hospital not found")
+        obj = obj[0]
+        if obj.PASSWORD != password:
+            return HttpResponse('Password wrong')
+        request.session['username'] = username
+        request.session.set_expiry(14400)
+        return redirect('/hospital_home/')
 
 def hospital_home(request):
-    html = render(request,'donor_home.html')
-    return html
+    if not request.session.get('username'):
+        return HttpResponse("Session Expired.")
+    if request.method=='GET':
+        return render(request, 'hospital_home.html')
+    else:
+        username = request.session['username']
+        b_group = request.POST['b_group']
+        rh = request.POST['rh']
+        amount = request.POST['amount']
+
+        _, created = req_received_blood.objects.update_or_create(
+                H_ID=username,
+                BLOOD_BAG_NO='0',
+                BLOODTYPE=b_group,
+                RHFACTOR=rh,
+                RECEIVED_AMOUNT=0,
+                REQUESTED_AMOUNT=amount,
+        )
+
+        return redirect('/hospital_home/')
+
+def approve(request):
+    return render(request, 'approve_req.html')

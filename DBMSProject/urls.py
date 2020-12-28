@@ -8,13 +8,11 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
-
+    path('home/', views.home, name='home'),
     path('admin_login/', views.admin_login, name='admin_login'),
-    path('admin_home', views.admin_home, name= 'admin_home'),
-
+    path('admin_home/', views.admin_home, name= 'admin_home'),
     path('add_hospital/', views.add_hospital, name='add_hospital'),
     path('add_staff/', views.add_staff, name='add_staff'),
-
     path('blood_storage/', views.blood_storage, name= 'blood_storage'),
     path('approve_req/', views.approve_req, name='approve_req'),
 
@@ -26,6 +24,5 @@ urlpatterns = [
     path('staff_home/', views.staff_home, name='staff_home'),
 
     path('hospital_login/', views.hospital_login, name='hospital_home'),
-    path('hospital_home/', views.hospital_home, name='hospital_page'),
-
+    path('hospital_home/', views.hospital_home, name='hospital_page'), 
 ]

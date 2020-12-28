@@ -9,12 +9,12 @@
 <body>
 
 <div class="topnav">
-  <a  href="admin_home.html">Home</a>
-  <a class="active" href="#">Add new staff </a>
-  <a href="add_hos.html">Add new Hospital </a>
-  <a href="#">Storage </a>
-  <a href="#"><i class="fa fa-fw fa-envelope"></i> </a>
-  <a href="admin_login.html">logout</a>
+  <a class="active" href="#home">Home</a>
+  <a href="/add_staff/">Add new staff </a>
+  <a href="/add_hospital/">Add new Hospital </a>
+  <a href="/blood_storage/">Storage </a>
+  <a href="/approve_req/">Approve</a>
+  <a href="/admin_login/">logout</a>
 
 
 </div>
@@ -22,7 +22,7 @@
 
 <div class="login-page">
   <div class="form">
-  <h2>ADD NEW STAFF</h2>
+  <h2>Add New Staff</h2>
 
     <form action="/add_staff/" method="post" >
       {% csrf_token %}

@@ -10,15 +10,12 @@
 <div class="login-page">
     <div class="form">
 
-
-      <form method="POST" action="">
-        <input type="text" placeholder="HOSPITAL_ID" name="username">
-        <input type="password" placeholder="password" name="password">
+      <form method="POST" action="/hospital_login/">
+        {% csrf_token %}
+        <input type="text" placeholder="Hospital Id" name="username">
+        <input type="password" placeholder="Password" name="password">
         <button name="submit">LOGIN</button>
-
-
       </form>
-
   </div>
   </div>
   </body>

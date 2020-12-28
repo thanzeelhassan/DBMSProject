@@ -10,12 +10,11 @@
 
 <div class="topnav">
   <a class="active" href="#home">Home</a>
-  <a href="add_staff.html">Add new staff </a>
-  <a href="add_hos.html">Add new Hospital </a>
-  <a href="#">Storage </a>
-  <a href="#"><i class="fa fa-fw fa-envelope"></i> </a>
-  <a href="admin_login.html">logout</a>
-
+  <a href="/add_staff/">Add new staff </a>
+  <a href="/add_hospital/">Add new Hospital </a>
+  <a href="/blood_storage/">Storage </a>
+  <a href="/approve_req/">Approve</a>
+  <a href="/admin_login/">logout</a>
 
 </div>
 
@@ -26,7 +25,7 @@
   <tr>
     <td>
 
-      <h1>HELLO<br><br> WELCOME</h1>
+      <h1><br> WELCOME</h1>
 
     </td>
     <td>
@@ -34,7 +33,8 @@
   <div class="form">
   <h2>SEARCH A DONOR</h2>
 
-    <form action=# method="post" >
+    <form action="/admin_home/" method="post" >
+      {% csrf_token %}
       <input type="text" placeholder="DONOR_ID" name="d_id">
 
       <button name="submit">SEARCH</button>
@@ -49,6 +49,6 @@
     </td>
 
 </tr>
-
+</table
 </body>
 </html>

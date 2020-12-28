@@ -10,12 +10,12 @@
 <body>
 
 <div class="topnav">
-  <a  href="admin_home.html">Home</a>
-  <a  href="add_staff.html">Add new staff </a>
-  <a class="active" href="#">Add new Hospital </a>
-  <a href="#">Storage </a>
-  <a href="#"><i class="fa fa-fw fa-envelope"></i> </a>
-  <a href="admin_login.html">logout</a>
+  <a class="active" href="#home">Home</a>
+  <a href="/add_staff/">Add new staff </a>
+  <a href="/add_hospital/">Add new Hospital </a>
+  <a href="/blood_storage/">Storage </a>
+  <a href="/approve_req/">Approve</a>
+  <a href="/admin_login/">logout</a>
 
 
 </div>
@@ -23,7 +23,7 @@
 
 <div class="login-page">
   <div class="form">
-  <h2>ADD NEW Hospital</h2>
+  <h2>Add New Hospital</h2>
 
     <form action="/add_hospital/" method="post" >
       {% csrf_token %}
@@ -32,7 +32,8 @@
       <input type="text" placeholder="PASSWORD" name="password">
       <input type="text" placeholder="EMAIL" name="email">
       <input type="text" placeholder="CONTACT NUMBER" name="phone">
-
+      <input type="text" placeholder="ADDRESS" name="address">
+      <input type="text" placeholder="PIN" name="pin">
       <button name="submit">ADD</button>
 
     </form>

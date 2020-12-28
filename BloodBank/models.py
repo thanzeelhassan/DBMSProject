@@ -44,7 +44,8 @@ class hospital(models.Model):
     EMAIL=models.CharField(max_length=50)
     PASSWORD=models.CharField(max_length=50)
     PHONENO=models.CharField(max_length=50)
-
+    ADDRESS=models.CharField(max_length=50)
+    PIN=models.IntegerField()
     class Meta:
         db_table='hospital'
 
@@ -74,7 +75,6 @@ class staff(models.Model):
         db_table='staff'
 
 ##########################################################
-
 
 class req_received_blood(models.Model):
     REQUEST_ID=models.CharField(max_length=50,primary_key=True)
