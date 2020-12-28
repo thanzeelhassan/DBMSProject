@@ -25,9 +25,12 @@
   <div class="form">
   <h2>ADD NEW Hospital</h2>
 
-    <form action=# method="post" >
-      <input type="text" placeholder="HOSPITAL NAME" name="name">
+    <form action="/add_hospital/" method="post" >
+      {% csrf_token %}
+      <input type="text" placeholder="HOSPITAL NAME" name="hname">
+      <input type="text" placeholder="USER NAME" name="username">
       <input type="text" placeholder="PASSWORD" name="password">
+      <input type="text" placeholder="EMAIL" name="email">
       <input type="text" placeholder="CONTACT NUMBER" name="phone">
 
       <button name="submit">ADD</button>
