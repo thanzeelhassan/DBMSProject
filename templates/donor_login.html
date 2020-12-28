@@ -10,12 +10,13 @@
     <div class="form">
 
 
-      <form method="POST" action="">
+      <form method="POST" action="/donor_login/">
+        {% csrf_token %}
         <input type="text" placeholder="EMAIL" name="email">
         <input type="password" placeholder="password" name="password">
         <button name="submit">LOGIN</button>
 
-        <p class="message">Not registered? <a href="donor_reg.html">Create an account</a></p>
+        <p class="message">Not registered? <a href="/donor_reg/">Create an account</a></p>
       </form>
 
   </div>
