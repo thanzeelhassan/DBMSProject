@@ -10,11 +10,11 @@
 
 <div class="topnav">
   <a class="active" href="#home">Home</a>
-  <a href="/add_staff/">Add new staff </a>
-  <a href="/add_hospital/">Add new Hospital </a>
+  <a href="/add_staff/">Add New Staff </a>
+  <a href="/add_hospital/">Add New Hospital </a>
   <a href="/blood_storage/">Storage </a>
   <a href="/approve_req/">Approve</a>
-  <a href="/admin_login/">logout</a>
+  <a href="/admin_login/">Logout</a>
 
 </div>
 
@@ -33,10 +33,10 @@
   <div class="form">
   <h2>SEARCH A DONOR</h2>
 
-    <form action="/admin_home/" method="post" >
+    <form action="/admin_search/" method="post" >
       {% csrf_token %}
       <input type="text" placeholder="DONOR_ID" name="d_id">
-
+      <input type="hidden" name="donor_id" value= " Thanzeel47 ">
       <button name="submit">SEARCH</button>
 
     </form>

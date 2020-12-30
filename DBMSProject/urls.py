@@ -15,6 +15,9 @@ urlpatterns = [
     path('add_staff/', views.add_staff, name='add_staff'),
     path('blood_storage/', views.blood_storage, name= 'blood_storage'),
     path('approve_req/', views.approve_req, name='approve_req'),
+    path('approve/', views.approve, name='approve'),
+    path('reject/', views.reject, name='reject'),
+    path('admin_search/', views.admin_search, name='admin_search'),
 
     path('donor_reg/', views.donor_reg, name='donor_reg'),
     path('donor_login/', views.donor_login, name='donor_login'),
@@ -24,5 +27,5 @@ urlpatterns = [
     path('staff_login/', views.staff_login, name='staff_login'),
 
     path('hospital_login/', views.hospital_login, name='hospital_home'),
-    path('hospital_home/', views.hospital_home, name='hospital_page'), 
+    path('hospital_home/', views.hospital_home, name='hospital_page'),
 ]

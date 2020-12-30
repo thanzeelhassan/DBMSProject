@@ -1,4 +1,5 @@
 #import csv,io
+from datetime import date
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from BloodBank.models import donor,blood,hospital,storage,staff,req_received_blood,health_cond,admin_table
@@ -8,68 +9,24 @@ from django.contrib.auth import logout
 def home(request):
     return render(request, 'home.html')
 
-def donor_login(request):
-    if request.method=='GET':
-        logout(request)
-        return render(request, 'donor_login.html')
-
-    else:
-        email = request.POST['email']
-        password = request.POST['password']
-        obj=donor.objects.filter(D_ID=email)
-        if not len(obj):
-            return HttpResponse("User not found")
-        obj = obj[0]
-        if obj.PASSWORD != password:
-            return HttpResponse('Password wrong')
-        request.session['email'] = email
-        request.session.set_expiry(14400)
-        return redirect('/donor_home/')
-
-def donor_home(request):
-    if not request.session.get('email'):
-        return HttpResponse("Session Expired. Please Login Again.")
-    if request.method=='GET':
-        return render(request, 'donor_home.html')
-    else:
-        email = request.session['email']
-        obj1=donor.objects.filter(D_ID=email)
-        obj2=health_cond.objects.filter(D_ID=email)
-        obj1 = obj1[0]
-        obj2 = obj2[0]
-        will = request.POST['will']
-        health = request.POST['health']
-        if(will == "YES"):
-            obj1.WANT_TO_DONATE = 'YES'
-            obj1.save()
-        if(will == 'NO'):
-            obj1.WANT_TO_DONATE = 'NO'
-            obj1.save()
-        if(health != ""):
-            obj2.CONDITION = health
-            obj2.save()
-
-        return redirect('/donor_home/')
-
 def admin_login(request):
     if request.method=='GET':
+        logout(request)
         return render(request, 'admin_login.html')
 
     else:
         post = request.POST
-
-        username = str(post['username'])
-        password = str(post['password'])
+        username = request.POST['username']
+        password = request.POST['password']
         if admin_table.objects.filter(A_ID=username,PASSWORD=password).exists() :
-            return render(request, 'admin_home.html')
-            #return HttpResponse("Welcome Admin")
+            request.session['username'] = username
+            request.session.set_expiry(14400)
+            return redirect('/admin_home/')
         else:
             return HttpResponse("Username and Password does not match")
 
 def admin_home(request):
-    # NEED TO DO -------------------------
-    html = render(request,'admin_home.html')
-    return html
+    return render(request,'admin_home.html')
 
 def add_hospital(request):
     if request.method=='GET':
@@ -134,7 +91,35 @@ def blood_storage(request):
 def approve_req(request):
     var1=req_received_blood.objects.values()
     list_result = [entry for entry in var1]
+    #request.session['request_id'] =
     return render(request,'approve_req.html',{'abcd2':list_result})
+
+def approve(request):
+    var2 = request.POST.get('request_id',None)
+    var4 = request.POST.get('requested_amount',None)
+
+    var3 =req_received_blood.objects.get(REQUEST_ID=var2)
+    var3.RECEIVED_AMOUNT = var4
+    var3.save()
+
+    var1=req_received_blood.objects.values()
+    list_result = [entry for entry in var1]
+    return render(request,'approve.html',{'abcd2':list_result})
+
+def reject(request):
+    var2 = request.POST.get('request_id',None)
+    entry = req_received_blood.objects.get(REQUEST_ID = var2)
+    entry.delete()
+    #req_received_blood.objects.filter(REQUEST_ID=var2).delete()
+    var1=req_received_blood.objects.values()
+    list_result = [entry for entry in var1]
+    return render(request,'approve.html',{'abcd2':list_result})
+
+def admin_search(request):
+    var2 = request.POST.get('donor_id',None)
+    var2 ="Thanzeel47"
+    var1 = donor.objects.get(D_ID = var2)
+    return render(request,'admin_search.html',{'abcd2':var1})
 
 def donor_reg(request):
     if request.method=='GET':
@@ -186,7 +171,6 @@ def donor_reg(request):
 
         return redirect('/donor_login/')
 
-
 def donor_login(request):
     if request.method=='GET':
         logout(request)
@@ -207,7 +191,7 @@ def donor_login(request):
 
 def donor_home(request):
     if not request.session.get('email'):
-        return HttpResponse("Session Expired.")
+        return HttpResponse("Session Expired. Please Login Again.")
     if request.method=='GET':
         return render(request, 'donor_home.html')
     else:
@@ -229,7 +213,6 @@ def donor_home(request):
             obj2.save()
 
         return redirect('/donor_home/')
-
 
 def staff_login(request):
     if request.method=='GET':
@@ -313,14 +296,16 @@ def hospital_home(request):
     if not request.session.get('username'):
         return HttpResponse("Session Expired.")
     if request.method=='GET':
-        return render(request, 'hospital_home.html')
+        return render(request,'hospital_home.html')
     else:
         username = request.session['username']
         b_group = request.POST['b_group']
         rh = request.POST['rh']
         amount = request.POST['amount']
+        request_id = username + '_' +b_group + '_' + rh + '_' + str(date.today())
 
         _, created = req_received_blood.objects.update_or_create(
+                REQUEST_ID=request_id,
                 H_ID=username,
                 BLOOD_BAG_NO='0',
                 BLOODTYPE=b_group,
@@ -330,6 +315,3 @@ def hospital_home(request):
         )
 
         return redirect('/hospital_home/')
-
-def approve(request):
-    return render(request, 'approve_req.html')
